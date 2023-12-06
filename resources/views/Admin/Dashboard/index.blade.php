@@ -28,7 +28,7 @@
     </div>
     <div class="col-lg-3">
         <div class="card">
-            <div class="card-header">Pengaduan Poses</div>
+            <div class="card-header">Pengaduan Proses</div>
             <div class="card-body">
                 <div class="text-center">
                     {{ $proses }}

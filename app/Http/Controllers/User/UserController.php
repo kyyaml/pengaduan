@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use App\Models\Masyarakat;
 use App\Models\Pengaduan;
 use Illuminate\Http\Request;
@@ -14,7 +15,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('user.landing');
+        $kategori = Kategori::all();
+        $pengaduan = Pengaduan::all()->count();
+        return view('user.landing',compact('kategori'),['pengaduan'=>$pengaduan]);
+
     }
 
     public function login(Request $request)
@@ -91,8 +95,13 @@ class UserController extends Controller
 
         $data = $request->all();
 
+        // $kategori = Kategori::all();
+        // return view(compact('kategori'));
+
         $validate = Validator::make($data, [
+            'judul' => ['required'],
             'isi_laporan' => ['required'],
+            'id_kategori' => ['required'],
         ]);
 
         if ($validate->fails()) {
@@ -108,7 +117,9 @@ class UserController extends Controller
         $pengaduan = Pengaduan::create([
             'tgl_pengaduan' => date('Y-m-d h:i:s'),
             'nik' => Auth::guard('masyarakat')->user()->nik,
+            'judul' => $data['judul'],
             'isi_laporan' => $data['isi_laporan'],
+            'id_kategori' => $data['id_kategori'],
             'foto' => $data['foto'] ?? '',
             'status' => '0',
         ]);
@@ -122,20 +133,26 @@ class UserController extends Controller
 
     public function laporan($siapa = '')
     {
+
+        // if (!Auth::guard('masyarakat')->user()) {
+        //     return redirect()->back()->with(['pesan' => 'Login dibutuhkan!'])->withInput();
+        // }
+        
         $terverifikasi = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', '!=', '0']])->get()->count();
         $proses = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'proses']])->get()->count();
         $selesai = Pengaduan::where([['nik', Auth::guard('masyarakat')->user()->nik], ['status', 'selesai']])->get()->count();
+        $kategori = Kategori::all();
 
         $hitung = [$terverifikasi, $proses, $selesai];
 
         if ($siapa == 'me') {
             $pengaduan = Pengaduan::where('nik', Auth::guard('masyarakat')->user()->nik)->orderBy('tgl_pengaduan', 'desc')->get();
 
-            return view('user.laporan', ['pengaduan' => $pengaduan, 'hitung' => $hitung, 'siapa' => $siapa]);
+            return view('user.laporan', ['pengaduan' => $pengaduan, 'hitung' => $hitung, 'siapa' => $siapa],compact('kategori'));
         } else {
             $pengaduan = Pengaduan::where([['nik', '!=', Auth::guard('masyarakat')->user()->nik], ['status', '!=', '0']])->orderBy('tgl_pengaduan', 'desc')->get();
 
-            return view('user.laporan', ['pengaduan' => $pengaduan, 'hitung' => $hitung, 'siapa' => $siapa]);
+            return view('user.laporan', ['pengaduan' => $pengaduan, 'hitung' => $hitung, 'siapa' => $siapa],compact('kategori'));
         }
     }
 }

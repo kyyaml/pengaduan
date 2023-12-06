@@ -2,25 +2,7 @@
 
 @section('title','Detail Pengaduan')
 
-@section('css')
-    <style>
-        .text-primary:hover {
-            text-decoration: underline;
-        }
-        .text-grey:hover{
-            color: #6c757d
-        }
-        .text-grey{
-            color: #6c757d
-        }
-        .btn-purple{
-            background: #6a70fc;
-            border: 1px solid #6a70fc;
-            color: #fff;
-            width: 100%;
-        }
-    </style>
-@endsection
+
 
 @section('header')
     <a href="{{ route('pengaduan.index') }}" class="text-primary">Data Pengaduan</a>
@@ -32,10 +14,8 @@
     <div class="row">
         <div class="col-lg-6 col-12">
             <div class="card">
-                <div class="car-header">
-                    <div class="text-center">
-                        Pengaduan Masyarakat
-                    </div>
+                <div class="card-header text-center">
+                    Pengaduan Masyarakat
                 </div>
                 <div class="card-body">
                     <table class="table">
@@ -113,7 +93,7 @@
                             <label for="tanggapan">Tanggapan</label>
                             <textarea name="tanggapan" id="tanggapan" rows="4" placeholder="Belum ada tanggapan" class="form-control">{{ $tanggapan->tanggapan ?? '' }}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-purple">KIRIM</button>
+                        <button type="submit" class="btn btn-purple w-100">KIRIM</button>
                     </form>
                     @if (Session::has('status'))
                         <div class="alert alert-succes mt-2">

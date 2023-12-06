@@ -66,8 +66,22 @@
                 <form action="{{ route('pekat.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Judul</label>
+                        <input type="text" name="judul" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="Tuliskan Judul">
+                    </div>
+                    <div class="form-group">
                         <textarea name="isi_laporan" placeholder="Masukkan Isi Laporan" class="form-control"
                             rows="4">{{ old('isi_laporan') }}</textarea>
+                    </div>
+                    <div class="form-group ">
+                        <label for="inputState">Kategori</label>
+                        <select name="id_kategori" class="form-control">
+                            <option value=""><-- Pilih Kategori --></option>
+                            @foreach ($kategori as $kategoris)
+                                <option value="{{ $kategoris->id_kategori }}">{{ $kategoris->nama }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="file" name="foto" class="form-control">

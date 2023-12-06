@@ -17,12 +17,15 @@ return new class extends Migration
             $table->id('id_pengaduan');
             $table->dateTime('tgl_pengaduan');
             $table->char('nik',16);
+            $table->string('judul');
             $table->text('isi_laporan');
+            $table->unsignedBigInteger('id_kategori');
             $table->string('foto');
             $table->enum('status', ['0','proses','selesai' ]);
             
             $table->timestamps();
 
+            $table->foreign('id_kategori')->references('id_kategori')->on('kategori');
             $table->foreign('nik')->references('nik')->on('masyarakat');
         });
     }

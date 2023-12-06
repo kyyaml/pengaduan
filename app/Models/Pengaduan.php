@@ -16,7 +16,9 @@ class Pengaduan extends Model
     protected $fillable = [
         'tgl_pengaduan',
         'nik',
+        'judul',
         'isi_laporan',
+        'id_kategori',
         'foto',
         'status',
     ];
@@ -28,4 +30,8 @@ class Pengaduan extends Model
         return $this->hasOne(Masyarakat::class,'nik','nik');
     }
 
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class,'id_kategori');
+    }
 }

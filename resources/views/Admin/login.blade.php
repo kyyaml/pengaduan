@@ -2,29 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <style>
-        body {
-            background: #6a70fc;
+    <style> 
+        body{
+            background: linear-gradient(#6a70fc, #d6d6d6);
+            min-height: 100vh;
         }
-    
         .btn-purple {
             background: #6a70fc;
             width: 100%;
             color: #fff;
         }
-    
     </style>
-
-    <title>Halaman Masuk Petugas</title>
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-5">
+            <div class=" col-lg-6 col-md-8 col-sm-8 col-xs-4 ">
                 <h2 class="text-center text-white mb-0 mt-5">PEKAT</h2>
                 <P class="text-center text-white mb-5">Pengaduan Masyarakat</P>
                 <div class="card mt-5">

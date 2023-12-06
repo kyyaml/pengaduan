@@ -10,10 +10,36 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
         integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    
-        @yield('css')
+
+    @yield('css')
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-    
+
+    <style>
+        .text-primary:hover {
+            text-decoration: underline;
+        }
+
+        .text-grey:hover {
+            color: #6c757d
+        }
+
+        .text-grey {
+            color: #6c757d
+        }
+
+        .btn-purple {
+            background: #6a70fc;
+            border: 1px solid #6a70fc;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .btn-purple:hover {
+            background: #5258c7; /* Warna mirip tetapi lebih gelap */
+    border: 1px solid #5258c7;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -24,23 +50,34 @@
                 <h3 class="mb-0">PEKAT</h3>
                 <p class="text-white mb-0">Pengaduan Masyarakat</p>
             </div>
+          
 
             <ul class="list-unstyled components">
-                <li class="{{ Request::is('Admin/dashboard') ? 'active' : ''}}">
+                <li class="{{ Request::is('Admin/dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard.index') }}">Dashboard</a>
                 </li>
-                <li class="{{ Request::is('Admin/pengaduan') ? 'active' : ''}}">
+                <li class="{{ Request::is('Admin/pengaduan') ? 'active' : '' }}">
                     <a href="{{ route('pengaduan.index') }}">Pengaduan</a>
                 </li>
-                <li class="{{ Request::is('Admin/petugas') ? 'active' : ''}}">
-                    <a href="{{ route('petugas.index') }}">Petugas</a>
-                </li>
-                <li class="{{ Request::is('Admin/masyarakat') ? 'active' : ''}}">
-                    <a href="{{ route('masyarakat.index') }}">Masyarakat</a>
-                </li>
-                <li class="{{ Request::is('Admin/laporan') ? 'active' : ''}}">
-                    <a href="{{ route('laporan.index') }}">Laporan</a>
-                </li>
+            
+                @if(Auth::guard('admin')->check())
+                    {{-- Show these items only for admin --}}
+                    @if(Auth::guard('admin')->user()->level == 'admin')
+                        <li class="{{ Request::is('Admin/petugas') ? 'active' : '' }}">
+                            <a href="{{ route('petugas.index') }}">Petugas</a>
+                        </li>
+                        <li class="{{ Request::is('Admin/masyarakat') ? 'active' : '' }}">
+                            <a href="{{ route('masyarakat.index') }}">Masyarakat</a>
+                        </li>
+                        <li class="{{ Request::is('Admin/kategori') ? 'active' : '' }}">
+                            <a href="{{ route('kategori.index') }}">Kategori</a>
+                        </li>
+                        <li class="{{ Request::is('Admin/laporan') ? 'active' : '' }}">
+                            <a href="{{ route('laporan.index') }}">Laporan</a>
+                        </li>
+                    @endif
+                    {{-- End admin-only items --}}
+                @endif
             </ul>
         </nav>
 
@@ -63,12 +100,13 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <a href="{{ route('admin.logout') }}" class="btn btn-white btn-sm">{{ Auth::guard('admin')->user()->nama_petugas }}</a>
+                            <a href="{{ route('admin.logout') }}"
+                                class="btn btn-white btn-sm">{{ Auth::guard('admin')->user()->nama_petugas }}</a>
                         </ul>
                     </div>
                 </div>
             </nav>
-                @yield('content')
+            @yield('content')
         </div>
     </div>
 
@@ -81,15 +119,14 @@
     </script>
 
     <script>
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
             });
         });
-
     </script>
     @yield('js')
-    </body>
+</body>
 
 </html>

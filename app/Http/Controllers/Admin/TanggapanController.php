@@ -23,7 +23,7 @@ class TanggapanController extends Controller
                 'id_petugas' => Auth::guard('admin')->user()->id_petugas,
             ]);
             
-            return redirect()->route('pengaduan.show', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
+            return redirect()->route('pengaduan.index', ['pengaduan' => $pengaduan, 'tanggapan' => $tanggapan]);
         } else{
             $pengaduan->update(['status' => $request->status]);
             $tanggapan = Tanggapan::create([
@@ -32,7 +32,7 @@ class TanggapanController extends Controller
                 'tanggapan' => $request->tanggapan,
                 'id_petugas' => Auth::guard('admin')->user()->id_petugas,
             ]);
-            return redirect()->route('pengaduan.show', ['pengaduan'=> $pengaduan, 'tanggapan' => $tanggapan])->with(['status'=>'Berhasil Dikirim!']);
+            return redirect()->route('pengaduan.index', ['pengaduan'=> $pengaduan, 'tanggapan' => $tanggapan])->with(['status'=>'Berhasil Dikirim!']);
         }
 
     }
